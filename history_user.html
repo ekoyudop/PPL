@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alutsisita Dashboard User</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <style>
+    #user {
+      margin-right: 25px;
+    }
+
+    #armory-summary {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    #content {
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+      margin-right: 25px;
+      margin-left: 25px;
+      margin-bottom: 25px;
+    }
+
+    #history {
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+      margin-left: 0px;
+      margin-right: 10px;
+      margin-top: 10px;
+    }
+
+    #navbar h2 {
+      margin-left: 25px;
+    }
+
+    ul>li {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 bg-body-tertiary" id="navbar">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+      <h2>ALUTSISTA</h2>
+    </a>
+
+
+    <ul class="nav nav-pills" id="user">
+      <li class="nav-item">
+        <h3>Senin, 4 Desember 2023</h3>
+      </li>
+      <li class="nav-item">
+        <h3>| User
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle"
+            viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+            <path fill-rule="evenodd"
+              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+          </svg>
+        </h3>
+
+      </li>
+    </ul>
+  </header>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 280px;">
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item">
+            <a href="#" class="nav-link active" aria-current="page">
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link link-body-emphasis">
+              History
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link link-body-emphasis">
+              Armory
+            </a>
+          </li>
+        </ul>
+        <div class="container">
+          <a href="#" class="nav-link link-body-emphasis">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z" />
+              <path fill-rule="evenodd"
+                d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+            </svg>
+            Logout
+          </a>
+        </div>
+      </div>
+      <div class="col" id="content">
+        <h2>History</h2>
+        <div class="row" id="history">
+          <div class="col">Test</div>
+          <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
+        </div>
+        <div class="row" id="history">
+          <div class="col">Test</div>
+          <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
+        </div>
+        <div class="row" id="history">
+          <div class="col">Test</div>
+          <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
