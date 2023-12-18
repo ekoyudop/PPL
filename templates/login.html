@@ -10,6 +10,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
     <style>
         .login-form {
             width: 350px;
@@ -17,7 +20,7 @@
             margin-top: 150px;
             padding: 20px;
             background-color: #fff;
-            border-radius: 0px;
+            border-radius: 10px;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         }
 
@@ -25,17 +28,40 @@
             margin-bottom: 20px;
         }
 
-        .login-form a {
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-form a,
+        .login-form button {
             margin-top: 10px;
             width: 100%;
             border-radius: 10px;
         }
-
-        .login-form h3 {
-            text-align: center;
-            font-weight: bold;
-        }
     </style>
+    <script>
+        function login() {
+            $.ajax({
+                type: "POST",
+                url: "/api/login",
+                data: { username_give: $('#username').val(), password_give: $('#password').val() },
+                success: function (response) {
+                    if (response['result'] === 'success') {
+                        $.cookie('mytoken', response['token']);
+
+                        alert('Login complete!')
+                        window.location.href = '/'
+                    } else {
+                        alert(response['msg'])
+                    }
+                }
+            })
+        }
+    </script>
 </head>
 
 <body>
@@ -48,9 +74,11 @@
         <div class="mx-auto p-2" id="image" style="width: 300px;">
             <img src="Login Image.jpg" class="img-fluid" alt="...">
         </div>
-        <h3>Welcome</h3>
-        <a href="/login_admin" class="btn btn-primary" id="login-admin">Login Admin</a>
-        <a href="/login_user" class="btn btn-primary" id="login-user">Login User</a>
+        <h3>Login Admin</h3>
+        <input type="username" id="username" name="username" placeholder="Username">
+        <input type="password" id="password" name="password" placeholder="Password">
+        <button class="btn btn-primary" id="login" onclick="login()">Login</button>
+        <a href="/" class="btn btn-primary" id="back">Back</a>
     </div>
 </body>
 
