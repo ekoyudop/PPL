@@ -33,7 +33,7 @@
             border-radius: 5px;
         }
 
-        .login-form button {
+        .login-form a {
             margin-top: 10px;
             width: 100%;
             border-radius: 10px;
@@ -52,16 +52,10 @@
             <img src="Login Image.jpg" class="img-fluid" alt="...">
         </div>
         <h3>Login User</h3>
-        <form action="#">
-            <input type="username" id="username" name="username" placeholder="Username">
-            <input type="password" id="password" name="password" placeholder="Password">
-        </form>
-        <form action="dashboard_user.html" method="get">
-            <button type="submit" class="btn btn-primary" id="login">Login</button>
-        </form>
-        <form action="login.html" method="get">
-            <button type="submit" class="btn btn-primary" id="back">Back</button>
-        </form>
+        <input type="username" id="username" name="username" placeholder="Username">
+        <input type="password" id="password" name="password" placeholder="Password">
+        <a href="/dashboard" class="btn btn-primary" id="login">Login</a>
+        <a href="/login" class="btn btn-primary" id="back">Back</a>
     </div>
 </body>
 
