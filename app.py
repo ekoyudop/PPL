@@ -34,9 +34,7 @@ def index():
             user_info = None
             logged_in = False
         
-        return render_template("welcome.html", 
-                               user_info=user_info, 
-                               logged_in = logged_in)
+        return redirect(url_for("dashboard"))
     
     except jwt.ExpiredSignatureError:
         return render_template("welcome.html", msg="Your token has expired")
@@ -136,7 +134,7 @@ def api_login():
         payload = {
             "id": username_receive,
             "role": role_user,
-            "exp": datetime.datetime.utcnow() + datetime.timedelta(seconds=60 * 60 * 24),
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(seconds=20),
         }
 
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
