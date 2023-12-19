@@ -26,13 +26,10 @@ SECRET_KEY = "ALUTSISTA"
 def index():
     token_receive = request.cookies.get("mytoken")
     try:
-        if token_receive:
-            payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
-            user_info = db.user.find_one({"id": payload["id"]})
-            logged_in = True
-        else:
-            user_info = None
-            logged_in = False
+        payload = jwt.decode(
+            token_receive, 
+            SECRET_KEY, 
+            algorithms=["HS256"])
         
         return redirect(url_for("dashboard"))
     
@@ -77,22 +74,17 @@ def login():
 def dashboard():
     token_receive = request.cookies.get("mytoken")
     try:
-        if token_receive:
-            payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
-            user_info = db.user.find_one({"id": payload["id"]})
-            logged_in = True
-        else:
-            user_info = None
-            logged_in = False
-
-        return render_template("dashboard_admin.html", 
-                               user_info=user_info, 
-                               logged_in = logged_in)
+        payload = jwt.decode(
+            token_receive, 
+            SECRET_KEY, 
+            algorithms=["HS256"])
+        
+        return render_template("dashboard_admin.html")
     
     except jwt.ExpiredSignatureError:
-        return render_template("dashboard_admin.html", msg="Your token has expired")
+        return redirect(url_for("index"))
     except jwt.exceptions.DecodeError:
-        return render_template("dashboard_admin.html", msg="There was problem logging you in")
+        return redirect(url_for("index"))
     
 @app.route("/api/register", methods=["POST"])
 def api_register():
