@@ -39,6 +39,9 @@
         ul>li {
             margin-bottom: 10px;
         }
+        #current-time {
+            margin-right: 20px ;
+        }
     </style>
     <script>
         function logout() {
@@ -46,6 +49,22 @@
             alert('You have been logged out!')
             window.location.href = '/'
         }
+
+        function updateCurrentTime() {
+            var options = {
+                day: 'numeric',
+                month: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                hour12: false
+            };
+            var currentTime = new Date().toLocaleString(undefined, options);
+            document.getElementById("current-time").innerText = currentTime;
+        }
+        setInterval(updateCurrentTime, 1000);
+        updateCurrentTime();
     </script>
 </head>
 
@@ -59,10 +78,10 @@
 
         <ul class="nav nav-pills" id="admin">
             <li class="nav-item">
-                <h3>Senin, 4 Desember 2023</h3>
+                <h3 id="current-time"></h3>
             </li>
             <li class="nav-item">
-                <h3>| {{user_info.username}}
+                <h3>{{user_info.username}}
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                         class="bi bi-person-circle" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
