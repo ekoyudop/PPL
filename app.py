@@ -74,12 +74,27 @@ def login():
 def dashboard():
     token_receive = request.cookies.get("mytoken")
     try:
-        payload = jwt.decode(
-            token_receive, 
-            SECRET_KEY, 
-            algorithms=["HS256"])
+        if token_receive:
+            payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+            user_info = db.user.find_one({"id": payload["id"]})
+            if user_info:
+                is_admin = user_info.get("role") == "admin"
+                logged_in = True
+            else:
+                is_admin = False
+                logged_in = False
+        else:
+            user_info = None
+            is_admin = False
+            logged_in = False
+
+        weapon_list = db.weapon.find()
         
-        return render_template("dashboard_admin.html")
+        return render_template("dashboard.html", 
+                               user_info = user_info,
+                               is_admin = is_admin,
+                               logged_in = logged_in,
+                               weapon_list = weapon_list)
     
     except jwt.ExpiredSignatureError:
         return redirect(url_for("index"))
