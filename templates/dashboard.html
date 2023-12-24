@@ -51,7 +51,8 @@
 
 <body>
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 bg-body-tertiary" id="navbar">
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <a href="/dashboard"
+            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             <h2>ALUTSISTA</h2>
         </a>
 
@@ -61,7 +62,7 @@
                 <h3>Senin, 4 Desember 2023</h3>
             </li>
             <li class="nav-item">
-                <h3>| {{user_info.id}}
+                <h3>| {{user_info.username}}
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                         class="bi bi-person-circle" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
@@ -78,23 +79,23 @@
             <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 280px;">
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
-                        <a href="dashboard_admin.html" class="nav-link active" aria-current="page">
+                        <a href="/dashboard" class="nav-link active" aria-current="page">
                             Dashboard
                         </a>
                     </li>
                     <li>
-                        <a href="history_admin.html" class="nav-link link-body-emphasis">
+                        <a href="/history" class="nav-link link-body-emphasis">
                             History
                         </a>
                     </li>
                     <li>
-                        <a href="armory1_admin.html" class="nav-link link-body-emphasis">
+                        <a href="/armory" class="nav-link link-body-emphasis">
                             Armory
                         </a>
                     </li>
                     {% if is_admin %}
                     <li>
-                        <a href="manage_armory_admin.html" class="nav-link link-body-emphasis">
+                        <a href="/manage_armory" class="nav-link link-body-emphasis">
                             Manage Armory
                         </a>
                     </li>
@@ -140,102 +141,108 @@
                         <div class="col-auto me-auto">
                             <h2>Senjata Ringan</h2>
                         </div>
-                        <div class="col-auto"><a href="armory1_admin.html">Lihat Selengkapnya</a></div>
+                        <div class="col-auto"><a href="/armory/1">Lihat Selengkapnya</a></div>
                     </div>
                     {% for weapon in weapon_list %}
-                    {% if loop.index <= 4 %}
-                    <div class="row g-2 row-cols-lg-5 row-cols-2 row-cols-md-3">
+                    {% if loop.index <= 4 %} <div class="row g-2 row-cols-lg-5 row-cols-2 row-cols-md-3">
                         <div class="col">
                             <div class="card-body">
                                 <h3>{{ weapon.name }}</h3>
                                 <div class="text-center position-relative">
-                                    <a href="#!"><img src="{{weapon.image}}" alt="Image"
-                                            class="mb-3 img-fluid"></a>
+                                    <a href="#!"><img src="{{weapon.image}}" alt="Image" class="mb-3 img-fluid"></a>
                                 </div>
                                 <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-primary">Detail</button>
+                                    <a href="/armory_detail/{{weapon._id}}">
+                                        <button type="button" class="btn btn-primary">Detail</button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
                 </div>
-                <div class="row">
-                    <div class="row">
-                        <div class="col-auto me-auto">
-                            <h2>Meriam/Roket/Rudal</h2>
-                        </div>
-                        <div class="col-auto"><a href="armory2_admin.html">Lihat Selengkapnya</a></div>
-                    </div>
-                    {% for weapon in weapon_list %}
-                    {% if loop.index <= 4 %}
-                    <div class="row g-2 row-cols-lg-5 row-cols-2 row-cols-md-3">
-                        <div class="col">
-                            <div class="card-body">
-                                <h3>{{ weapon.name }}</h3>
-                                <div class="text-center position-relative">
-                                    <a href="#!"><img src="{{weapon.image}}" alt="Image"
-                                            class="mb-3 img-fluid"></a>
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-primary">Detail</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-                <div class="row">
-                    {% for weapon in weapon_list %}
-                    {% if loop.index <= 4 %}
-                    <div class="row g-2 row-cols-lg-5 row-cols-2 row-cols-md-3">
-                        <div class="col">
-                            <div class="card-body">
-                                <h3>{{ weapon.name }}</h3>
-                                <div class="text-center position-relative">
-                                    <a href="#!"><img src="{{weapon.image}}" alt="Image"
-                                            class="mb-3 img-fluid"></a>
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-primary">Detail</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-                <div class="row">
-                    <div class="row">
-                        <div class="col-auto me-auto">
-                            <h2>Pesawat Terbang</h2>
-                        </div>
-                        <div class="col-auto"><a href="armory4_admin.html">Lihat Selengkapnya</a></div>
-                    </div>
-                    {% for weapon in weapon_list %}
-                    {% if loop.index <= 4 %}
-                    <div class="row g-2 row-cols-lg-5 row-cols-2 row-cols-md-3">
-                        <div class="col">
-                            <div class="card-body">
-                                <h3>{{ weapon.name }}</h3>
-                                <div class="text-center position-relative">
-                                    <a href="#!"><img src="{{weapon.image}}" alt="Image"
-                                            class="mb-3 img-fluid"></a>
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-primary">Detail</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-
+                {% endif %}
+                {% endfor %}
             </div>
+            <div class="row">
+                <div class="row">
+                    <div class="col-auto me-auto">
+                        <h2>Meriam/Roket/Rudal</h2>
+                    </div>
+                    <div class="col-auto"><a href="/armory/2">Lihat Selengkapnya</a></div>
+                </div>
+                {% for weapon in weapon_list %}
+                {% if loop.index <= 4 %} <div class="row g-2 row-cols-lg-5 row-cols-2 row-cols-md-3">
+                    <div class="col">
+                        <div class="card-body">
+                            <h3>{{ weapon.name }}</h3>
+                            <div class="text-center position-relative">
+                                <a href="#!"><img src="{{weapon.image}}" alt="Image" class="mb-3 img-fluid"></a>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <a href="/armory_detail/{{weapon._id}}">
+                                    <button type="button" class="btn btn-primary">Detail</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            {% endif %}
+            {% endfor %}
         </div>
+        <div class="row">
+            <div class="row">
+                <div class="col-auto me-auto">
+                    <h2>Kendaraan Tempur</h2>
+                </div>
+                <div class="col-auto"><a href="/armory/3">Lihat Selengkapnya</a></div>
+            </div>
+            {% for weapon in weapon_list %}
+            {% if loop.index <= 4 %} <div class="row g-2 row-cols-lg-5 row-cols-2 row-cols-md-3">
+                <div class="col">
+                    <div class="card-body">
+                        <h3>{{ weapon.name }}</h3>
+                        <div class="text-center position-relative">
+                            <a href="#!"><img src="{{weapon.image}}" alt="Image" class="mb-3 img-fluid"></a>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <a href="/armory_detail/{{weapon._id}}">
+                                <button type="button" class="btn btn-primary">Detail</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="row">
+            <div class="col-auto me-auto">
+                <h2>Pesawat Terbang</h2>
+            </div>
+            <div class="col-auto"><a href="/armory/4">Lihat Selengkapnya</a></div>
+        </div>
+        {% for weapon in weapon_list %}
+        {% if loop.index <= 4 %} <div class="row g-2 row-cols-lg-5 row-cols-2 row-cols-md-3">
+            <div class="col">
+                <div class="card-body">
+                    <h3>{{ weapon.name }}</h3>
+                    <div class="text-center position-relative">
+                        <a href="#!"><img src="{{weapon.image}}" alt="Image" class="mb-3 img-fluid"></a>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <a href="/armory_detail/{{weapon._id}}">
+                            <button type="button" class="btn btn-primary">Detail</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    </div>
+
+    </div>
+    </div>
     </div>
 
 </body>
