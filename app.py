@@ -88,13 +88,19 @@ def dashboard():
             is_admin = False
             logged_in = False
 
-        weapon_list = db.weapon.find()
+        weapon_list1 = db.weapon.find({"type": "Senjata Ringan"})
+        weapon_list2 = db.weapon.find({"type": "Meriam/Roket/Rudal"})
+        weapon_list3 = db.weapon.find({"type": "Kendaraan Tempur"})
+        weapon_list4 = db.weapon.find({"type": "Pesawat Terbang"})
         
         return render_template("dashboard.html", 
                                user_info = user_info,
                                is_admin = is_admin,
                                logged_in = logged_in,
-                               weapon_list = weapon_list)
+                               weapon_list1 = weapon_list1,
+                               weapon_list2 = weapon_list2,
+                               weapon_list3 = weapon_list3,
+                               weapon_list4 = weapon_list4)
     
     except jwt.ExpiredSignatureError:
         return redirect(url_for("index"))
@@ -141,7 +147,7 @@ def api_login():
         payload = {
             "id": username_receive,
             "role": role_user,
-            "exp": datetime.datetime.utcnow() + datetime.timedelta(seconds=20),
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(seconds=60*60),
         }
 
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
