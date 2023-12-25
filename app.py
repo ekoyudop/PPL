@@ -107,6 +107,146 @@ def dashboard():
     except jwt.exceptions.DecodeError:
         return redirect(url_for("index"))
     
+@app.route('/history', methods = ['GET'])
+def history():
+    token_receive = request.cookies.get("mytoken")
+    try:
+        if token_receive:
+            payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+            user_info = db.user.find_one({"username": payload["id"]})
+            if user_info:
+                is_admin = user_info.get("role") == "admin"
+                logged_in = True
+            else:
+                is_admin = False
+                logged_in = False
+        else:
+            user_info = None
+            is_admin = False
+            logged_in = False
+        
+        return render_template("history.html", 
+                               user_info = user_info,
+                               is_admin = is_admin,
+                               logged_in = logged_in)
+    
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("index"))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("index"))
+    
+@app.route('/armory/1', methods = ['GET'])
+def armory1():
+    token_receive = request.cookies.get("mytoken")
+    try:
+        if token_receive:
+            payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+            user_info = db.user.find_one({"username": payload["id"]})
+            if user_info:
+                is_admin = user_info.get("role") == "admin"
+                logged_in = True
+            else:
+                is_admin = False
+                logged_in = False
+        else:
+            user_info = None
+            is_admin = False
+            logged_in = False
+        
+        return render_template("armory1.html", 
+                               user_info = user_info,
+                               is_admin = is_admin,
+                               logged_in = logged_in)
+    
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("index"))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("index"))
+    
+@app.route('/armory/2', methods = ['GET'])
+def armory2():
+    token_receive = request.cookies.get("mytoken")
+    try:
+        if token_receive:
+            payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+            user_info = db.user.find_one({"username": payload["id"]})
+            if user_info:
+                is_admin = user_info.get("role") == "admin"
+                logged_in = True
+            else:
+                is_admin = False
+                logged_in = False
+        else:
+            user_info = None
+            is_admin = False
+            logged_in = False
+        
+        return render_template("armory2.html", 
+                               user_info = user_info,
+                               is_admin = is_admin,
+                               logged_in = logged_in)
+    
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("index"))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("index"))
+    
+@app.route('/armory/3', methods = ['GET'])
+def armory3():
+    token_receive = request.cookies.get("mytoken")
+    try:
+        if token_receive:
+            payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+            user_info = db.user.find_one({"username": payload["id"]})
+            if user_info:
+                is_admin = user_info.get("role") == "admin"
+                logged_in = True
+            else:
+                is_admin = False
+                logged_in = False
+        else:
+            user_info = None
+            is_admin = False
+            logged_in = False
+        
+        return render_template("armory3.html", 
+                               user_info = user_info,
+                               is_admin = is_admin,
+                               logged_in = logged_in)
+    
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("index"))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("index"))
+
+@app.route('/armory/4', methods = ['GET'])
+def armory4():
+    token_receive = request.cookies.get("mytoken")
+    try:
+        if token_receive:
+            payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+            user_info = db.user.find_one({"username": payload["id"]})
+            if user_info:
+                is_admin = user_info.get("role") == "admin"
+                logged_in = True
+            else:
+                is_admin = False
+                logged_in = False
+        else:
+            user_info = None
+            is_admin = False
+            logged_in = False
+        
+        return render_template("armory4.html", 
+                               user_info = user_info,
+                               is_admin = is_admin,
+                               logged_in = logged_in)
+    
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("index"))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("index"))
+
 @app.route('/manage_armory', methods = ['GET'])
 def manage_armory():
     token_receive = request.cookies.get("mytoken")
