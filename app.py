@@ -134,11 +134,14 @@ def history():
             user_info = None
             is_admin = False
             logged_in = False
+
+        history = db.history.find()
         
         return render_template("history.html", 
                                user_info = user_info,
                                is_admin = is_admin,
-                               logged_in = logged_in)
+                               logged_in = logged_in,
+                               history = history)
     
     except jwt.ExpiredSignatureError:
         return redirect(url_for("index"))
@@ -389,6 +392,17 @@ def add_item():
             "dipakai": dipakai_receive,
             "rusak": rusak_receive,
             "image": filename if image_receive else None
+        })
+
+        mytime = datetime.now().strftime("%H:%M:%S - %d %B %Y")
+
+        history_message = f"{itemname_receive} telah berhasil ditambahkan (Tersedia: {tersedia_receive} | Dipakai: {dipakai_receive} | Rusak: {rusak_receive})"
+        history_message2 = f"Admin | {mytime}"
+
+        db.history.insert_one({
+            "message": history_message,
+            "by" : history_message2,
+            "timestamp": today
         })
 
         return jsonify({"result": "success"})

@@ -62,7 +62,7 @@
         function updateCurrentTime() {
             var options = {
                 day: 'numeric',
-                month: 'numeric',
+                month: 'long',
                 year: 'numeric',
                 hour: 'numeric',
                 minute: 'numeric',
@@ -144,62 +144,12 @@
             </div>
             <div class="col" id="content">
                 <h2>History</h2>
+                {% for history in history %}
                 <div class="row col-md-9" id="history">
-                    <div class="col">Test</div>
-                    <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
+                    <div class="col">{{history.message}}</div>
+                    <div class="col text-end">{{history.by}}</div>
                 </div>
-                <div class="row col-md-9" id="history">
-                    <div class="col">Test</div>
-                    <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
-                </div>
-                <div class="row col-md-9" id="history">
-                    <div class="col">Test</div>
-                    <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
-                </div>
-                <div class="row col-md-9" id="history">
-                    <div class="col">Test</div>
-                    <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
-                </div>
-                <div class="row col-md-9" id="history">
-                    <div class="col">Test</div>
-                    <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
-                </div>
-                <div class="row col-md-9" id="history">
-                    <div class="col">Test</div>
-                    <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
-                </div>
-                <div class="row col-md-9" id="history">
-                    <div class="col">Test</div>
-                    <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
-                </div>
-                <div class="row col-md-9" id="history">
-                    <div class="col">Test</div>
-                    <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
-                </div>
-                <div class="row col-md-9" id="history">
-                    <div class="col">Test</div>
-                    <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
-                </div>
-                <div class="row col-md-9" id="history">
-                    <div class="col">Test</div>
-                    <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
-                </div>
-                <div class="row col-md-9" id="history">
-                    <div class="col">Test</div>
-                    <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
-                </div>
-                <div class="row col-md-9" id="history">
-                    <div class="col">Test</div>
-                    <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
-                </div>
-                <div class="row col-md-9" id="history">
-                    <div class="col">Test</div>
-                    <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
-                </div>
-                <div class="row col-md-9" id="history">
-                    <div class="col">Test</div>
-                    <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
