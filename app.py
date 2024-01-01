@@ -88,6 +88,13 @@ def dashboard():
             is_admin = False
             logged_in = False
 
+        all_weapons1 = db.weapon.find()
+        all_weapons2 = db.weapon.find()
+        all_weapons3 = db.weapon.find()
+        total_tersedia = sum(weapon.get("tersedia", 0) for weapon in all_weapons1)
+        total_dipakai = sum(weapon.get("dipakai", 0) for weapon in all_weapons2)
+        total_rusak = sum(weapon.get("rusak", 0) for weapon in all_weapons3)
+
         weapon_list1 = db.weapon.find({"type": "Senjata Ringan"})
         weapon_list2 = db.weapon.find({"type": "Meriam/Roket/Rudal"})
         weapon_list3 = db.weapon.find({"type": "Kendaraan Tempur"})
@@ -100,7 +107,10 @@ def dashboard():
                                weapon_list1 = weapon_list1,
                                weapon_list2 = weapon_list2,
                                weapon_list3 = weapon_list3,
-                               weapon_list4 = weapon_list4)
+                               weapon_list4 = weapon_list4,
+                               total_tersedia = total_tersedia,
+                               total_dipakai = total_dipakai,
+                               total_rusak = total_rusak)
     
     except jwt.ExpiredSignatureError:
         return redirect(url_for("index"))
@@ -354,9 +364,9 @@ def add_item():
 
         itemname_receive = request.form["itemname_give"]
         kategori_receive = request.form["kategori_give"]
-        tersedia_receive = request.form["tersedia_give"]
-        dipakai_receive = request.form["dipakai_give"]
-        rusak_receive = request.form["rusak_give"]
+        tersedia_receive = int(request.form["tersedia_give"])
+        dipakai_receive = int(request.form["dipakai_give"])
+        rusak_receive = int(request.form["rusak_give"])
         image_receive = request.files["image_give"]
 
         today = datetime.now()
