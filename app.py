@@ -344,6 +344,46 @@ def api_login():
             "result": "fail", 
             "msg": "your username or password is incorrect"
         })
+    
+@app.route("/add_item", methods=["POST"])
+def add_item():
+    from datetime import datetime
+    token_receive = request.cookies.get("mytoken")
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+
+        itemname_receive = request.form["itemname_give"]
+        kategori_receive = request.form["kategori_give"]
+        tersedia_receive = request.form["tersedia_give"]
+        dipakai_receive = request.form["dipakai_give"]
+        rusak_receive = request.form["rusak_give"]
+        image_receive = request.files["image_give"]
+
+        today = datetime.now()
+        mytime = today.strftime("%Y-%m-%d-%H-%M-%S")
+
+        if image_receive:
+            extension = image_receive.filename.split('.')[-1]
+            filename = f'static/post-{mytime}.{extension}'
+            image_receive.save(filename)
+
+
+        existing_course = db.weapon.find_one({"name": itemname_receive})
+        if existing_course:
+            return jsonify({"result": "error", "message": "Item sudah ada."})
+
+        db.weapon.insert_one({
+            "name": itemname_receive,
+            "type": kategori_receive,
+            "tersedia": tersedia_receive,
+            "dipakai": dipakai_receive,
+            "rusak": rusak_receive,
+            "image": filename if image_receive else None
+        })
+
+        return jsonify({"result": "success"})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("discover"))
 
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)
