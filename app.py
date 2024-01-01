@@ -152,11 +152,14 @@ def armory1():
             user_info = None
             is_admin = False
             logged_in = False
+
+        weapon_list1 = db.weapon.find({"type": "Senjata Ringan"})
         
         return render_template("armory1.html", 
                                user_info = user_info,
                                is_admin = is_admin,
-                               logged_in = logged_in)
+                               logged_in = logged_in,
+                               weapon_list1 = weapon_list1)
     
     except jwt.ExpiredSignatureError:
         return redirect(url_for("index"))
@@ -180,11 +183,14 @@ def armory2():
             user_info = None
             is_admin = False
             logged_in = False
+
+        weapon_list2 = db.weapon.find({"type": "Meriam/Roket/Rudal"})
         
         return render_template("armory2.html", 
                                user_info = user_info,
                                is_admin = is_admin,
-                               logged_in = logged_in)
+                               logged_in = logged_in,
+                               weapon_list2 = weapon_list2)
     
     except jwt.ExpiredSignatureError:
         return redirect(url_for("index"))
@@ -208,11 +214,14 @@ def armory3():
             user_info = None
             is_admin = False
             logged_in = False
+
+        weapon_list3 = db.weapon.find({"type": "Kendaraan Tempur"})
         
         return render_template("armory3.html", 
                                user_info = user_info,
                                is_admin = is_admin,
-                               logged_in = logged_in)
+                               logged_in = logged_in,
+                               weapon_list3 = weapon_list3)
     
     except jwt.ExpiredSignatureError:
         return redirect(url_for("index"))
@@ -236,11 +245,14 @@ def armory4():
             user_info = None
             is_admin = False
             logged_in = False
+
+        weapon_list4 = db.weapon.find({"type": "Pesawat Terbang"})
         
         return render_template("armory4.html", 
                                user_info = user_info,
                                is_admin = is_admin,
-                               logged_in = logged_in)
+                               logged_in = logged_in,
+                               weapon_list4 = weapon_list4)
     
     except jwt.ExpiredSignatureError:
         return redirect(url_for("index"))
