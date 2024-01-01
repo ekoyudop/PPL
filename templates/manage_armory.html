@@ -125,6 +125,21 @@
             });
         }
 
+        function delete_item(item_id) {
+            $.ajax({
+                type: "DELETE",
+                url: "/delete_item/" + item_id,
+                success: function (response) {
+                    if (response["result"] === "success") {
+                        alert("Berhasil menghapus item");
+                        window.location.reload();
+                    } else {
+                        alert("Error: " + response["message"]);
+                    }
+                },
+            });
+        }
+
         function updateCurrentTime() {
             var options = {
                 day: 'numeric',
@@ -224,6 +239,7 @@
                             <th scope="col">Tersedia</th>
                             <th scope="col">Dipakai</th>
                             <th scope="col">Rusak</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -234,6 +250,7 @@
                             <td>{{weapon.tersedia}}</td>
                             <td>{{weapon.dipakai}}</td>
                             <td>{{weapon.rusak}}</td>
+                            <td><button onclick="delete_item('{{ weapon._id }}')" class="btn btn-danger" id="delete">Delete</button></td>
                         </tr>
                         {% endfor %}
                     </tbody>

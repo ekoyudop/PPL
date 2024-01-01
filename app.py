@@ -384,6 +384,19 @@ def add_item():
         return jsonify({"result": "success"})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("discover"))
+    
+@app.route('/delete_item/<string:item_id>', methods=['DELETE'])
+def delete_item(item_id):
+    try:
+        result = db.weapon.delete_one({'_id': ObjectId(item_id)})
+        if result.deleted_count > 0:
+            response = {'result': 'success', 'message': 'Item deleted successfully.'}
+        else:
+            response = {'result': 'error', 'message': 'Course not found.'}
+    except Exception as e:
+        response = {'result': 'error', 'message': str(e)}
+
+    return jsonify(response)
 
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)
