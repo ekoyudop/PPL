@@ -431,6 +431,7 @@ def add_item():
         history_message2 = f"Admin | {mytime}"
 
         db.history.insert_one({
+            "weapon": itemname_receive,
             "message": history_message,
             "by" : history_message2,
             "timestamp": today
@@ -442,8 +443,26 @@ def add_item():
     
 @app.route('/delete_item/<string:item_id>', methods=['DELETE'])
 def delete_item(item_id):
+    from datetime import datetime
     try:
+        weapon_data = db.weapon.find_one({'_id': ObjectId(item_id)})
+        weapon_name = weapon_data.get("name")
+
+        mytime = datetime.now().strftime("%H:%M:%S - %d %B %Y")
+
+        history_message = f"{weapon_name} telah berhasil dihapus"
+        history_message2 = f"Admin | {mytime}"
+        today = datetime.now()
+
+        db.history.insert_one({
+            "weapon": weapon_name,
+            "message": history_message,
+            "by" : history_message2,
+            "timestamp": today
+        })
+
         result = db.weapon.delete_one({'_id': ObjectId(item_id)})
+
         if result.deleted_count > 0:
             response = {'result': 'success', 'message': 'Item deleted successfully.'}
         else:
