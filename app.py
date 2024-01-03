@@ -291,7 +291,7 @@ def detail(weapon_id):
             logged_in = False
 
         weapon_detail = db.weapon.find_one({'_id': ObjectId(weapon_id)})
-        history = db.history.find({'weapon_name': weapon_detail['name']})
+        history = db.history.find({'weapon': weapon_detail['name']})
         
         return render_template("detail.html", 
                                user_info = user_info,
