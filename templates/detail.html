@@ -257,10 +257,12 @@
                     <h5>History</h5>
                 </div>
                 <div class="row">
+                    {% for history in history|reverse %}
                     <div class="row col-md-9" id="history">
-                        <div class="col">Test</div>
-                        <div class="col text-end">User - Senin, 11 Desember 2023 - 09:13:04 AM</div>
+                        <div class="col">{{history.message}}</div>
+                        <div class="col text-end">{{history.by}}</div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

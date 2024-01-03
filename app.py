@@ -291,12 +291,14 @@ def detail(weapon_id):
             logged_in = False
 
         weapon_detail = db.weapon.find_one({'_id': ObjectId(weapon_id)})
+        history = db.history.find({'weapon_name': weapon_detail['name']})
         
         return render_template("detail.html", 
                                user_info = user_info,
                                is_admin = is_admin,
                                logged_in = logged_in,
-                               weapon_detail = weapon_detail)
+                               weapon_detail = weapon_detail,
+                               history = history)
     
     except jwt.ExpiredSignatureError:
         return redirect(url_for("index"))
