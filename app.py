@@ -315,7 +315,8 @@ def detail_pakai(weapon_id):
             {'_id': ObjectId(weapon_id)},
             {
                 '$set': {
-                    "tersedia": db.weapon.find_one({'_id': ObjectId(weapon_id)})["tersedia"] - jumlah_receive
+                    "tersedia": db.weapon.find_one({'_id': ObjectId(weapon_id)})["tersedia"] - jumlah_receive,
+                    "terpakai": db.weapon.find_one({'_id': ObjectId(weapon_id)})["terpakai"] + jumlah_receive
                 }
             }
         )
