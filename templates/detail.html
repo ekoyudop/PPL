@@ -89,25 +89,32 @@
             console.log('Weapon ID:', weapon_id);
             console.log('Jumlah Give:', $("#jumlah").val());
 
-            if (parseInt('{{weapon_detail.tersedia}}') >= 1) {
-                $.ajax({
-                    type: "PUT",
-                    url: "/detail/" + weapon_id,
-                    data: formData,
-                    processData: false,  // Ensure FormData is not processed as a query string
-                    contentType: false,  // Ensure FormData is sent as multipart/form-data
-                    success: function (response) {
-                        if (response["result"] === "success") {
-                            alert("Berhasil mengambil item");
-                            window.location.reload();
-                        } else {
-                            alert("Error: " + response["message"]);
-                        }
-                    },
-                });
+            var availableStock = parseInt('{{weapon_detail.tersedia}}');
+            var requestedQuantity = parseInt($("#jumlah").val());
+
+            if (availableStock >= 1) {
+                if (requestedQuantity <= availableStock) {
+                    $.ajax({
+                        type: "PUT",
+                        url: "/detail/" + weapon_id,
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            if (response["result"] === "success") {
+                                alert("Berhasil mengambil item");
+                                window.location.reload();
+                            } else {
+                                alert("Error: " + response["message"]);
+                            }
+                        },
+                    });
+                } else {
+                    alert("Jumlah yang diminta melebihi stok yang tersedia");
+                }
             } else {
                 alert("Item Tersedia Habis");
-            }   
+            }
         }
 
 
