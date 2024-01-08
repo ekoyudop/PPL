@@ -82,6 +82,35 @@
     </style>
 
     <script>
+        function ambil(weapon_id) {
+            var formData = new FormData();
+            formData.append('jumlah_give', $("#jumlah").val());
+
+            console.log('Weapon ID:', weapon_id);
+            console.log('Jumlah Give:', $("#jumlah").val());
+
+            if (parseInt('{{weapon_detail.tersedia}}') >= 1) {
+                $.ajax({
+                    type: "PUT",
+                    url: "/detail/" + weapon_id,
+                    data: formData,
+                    processData: false,  // Ensure FormData is not processed as a query string
+                    contentType: false,  // Ensure FormData is sent as multipart/form-data
+                    success: function (response) {
+                        if (response["result"] === "success") {
+                            alert("Berhasil mengambil item");
+                            window.location.reload();
+                        } else {
+                            alert("Error: " + response["message"]);
+                        }
+                    },
+                });
+            } else {
+                alert("Item Tersedia Habis");
+            }   
+        }
+
+
         function tampilkanOverlay() {
             document.getElementById('overlay').style.display = 'block';
         }
@@ -238,16 +267,14 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <form action="#" style="display: flex; justify-content: center;">
-                                    <input type="number" id="number" name="number" placeholder="Masukkan Jumlah Item">
-                                </form>
+                                <input type="number" class="form-control" id="jumlah" name="number" placeholder="Masukkan Jumlah Item">
                                 <br>
-                                <form action="" style="display: flex; justify-content: center;">
+                                <div style="display: flex; justify-content: center;">
                                     <div class="d-grid gap-2 d-md-block">
-                                        <button class="btn btn-primary" type="button">Pakai</button>
+                                        <button class="btn btn-primary" type="button" onclick="ambil('{{weapon_detail._id}}')">Ambil</button>
                                         <button class="btn btn-danger" type="button">Rusak</button>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
