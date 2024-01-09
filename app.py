@@ -335,6 +335,37 @@ def manage_armory():
         return redirect(url_for("index"))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("index"))
+    
+@app.route('/edit/<string:weapon_id>', methods = ['GET'])
+def edit(weapon_id):
+    token_receive = request.cookies.get("mytoken")
+    try:
+        if token_receive:
+            payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+            user_info = db.user.find_one({"username": payload["id"]})
+            if user_info:
+                is_admin = user_info.get("role") == "admin"
+                logged_in = True
+            else:
+                is_admin = False
+                logged_in = False
+        else:
+            user_info = None
+            is_admin = False
+            logged_in = False
+
+        weapon_detail = db.weapon.find_one({'_id': ObjectId(weapon_id)})
+        
+        return render_template("edit.html", 
+                               user_info = user_info,
+                               is_admin = is_admin,
+                               logged_in = logged_in,
+                               weapon_detail = weapon_detail)
+    
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("index"))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("index"))
 
 @app.route("/api/register", methods=["POST"])
 def api_register():
