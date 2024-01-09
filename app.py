@@ -304,29 +304,6 @@ def detail(weapon_id):
         return redirect(url_for("index"))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("index"))
-    
-@app.route('/detail/<string:weapon_id>', methods = ['PUT'])
-def detail_pakai(weapon_id):
-    token_receive = request.cookies.get("mytoken")
-    try:
-        jumlah_receive = int(request.form["jumlah_give"]) 
-
-        db.weapon.update_one(
-            {'_id': ObjectId(weapon_id)},
-            {
-                '$set': {
-                    "tersedia": db.weapon.find_one({'_id': ObjectId(weapon_id)})["tersedia"] - jumlah_receive,
-                    "terpakai": db.weapon.find_one({'_id': ObjectId(weapon_id)})["terpakai"] + jumlah_receive
-                }
-            }
-        )
-
-        return jsonify({"result": "success"})
-    
-    except jwt.ExpiredSignatureError:
-        return redirect(url_for("index"))
-    except jwt.exceptions.DecodeError:
-        return redirect(url_for("index"))
 
 @app.route('/manage_armory', methods = ['GET'])
 def manage_armory():
@@ -414,6 +391,29 @@ def api_login():
             "msg": "your username or password is incorrect"
         })
     
+@app.route('/detail_pakai/<string:weapon_id>', methods = ['PUT'])
+def detail_pakai(weapon_id):
+    token_receive = request.cookies.get("mytoken")
+    try:
+        jumlah_receive = int(request.form["jumlah_give"]) 
+
+        db.weapon.update_one(
+            {'_id': ObjectId(weapon_id)},
+            {
+                '$set': {
+                    "tersedia": db.weapon.find_one({'_id': ObjectId(weapon_id)})["tersedia"] - jumlah_receive,
+                    "terpakai": db.weapon.find_one({'_id': ObjectId(weapon_id)})["terpakai"] + jumlah_receive
+                }
+            }
+        )
+
+        return jsonify({"result": "success"})
+    
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("index"))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("index"))
+
 @app.route("/add_item", methods=["POST"])
 def add_item():
     from datetime import datetime
@@ -496,6 +496,29 @@ def delete_item(item_id):
         response = {'result': 'error', 'message': str(e)}
 
     return jsonify(response)
+
+@app.route('/edit_item/<string:weapon_id>', methods = ['PUT'])
+def edit_item(weapon_id):
+    token_receive = request.cookies.get("mytoken")
+    try:
+        jumlah_receive = int(request.form["jumlah_give"]) 
+
+        db.weapon.update_one(
+            {'_id': ObjectId(weapon_id)},
+            {
+                '$set': {
+                    "tersedia": db.weapon.find_one({'_id': ObjectId(weapon_id)})["tersedia"] - jumlah_receive,
+                    "terpakai": db.weapon.find_one({'_id': ObjectId(weapon_id)})["terpakai"] + jumlah_receive
+                }
+            }
+        )
+
+        return jsonify({"result": "success"})
+    
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("index"))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("index"))
 
 if __name__ == "__main__":
     app.run("0.0.0.0", port=5000, debug=True)

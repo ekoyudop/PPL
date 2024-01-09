@@ -139,6 +139,33 @@
                 },
             });
         }
+        
+        function edit_item(item_id) {
+            var formData = new FormData();
+            formData.append('jumlah_give', $("#jumlah").val());
+
+            console.log('Weapon ID:', weapon_id);
+            console.log('Jumlah Give:', $("#jumlah").val());
+
+            var availableStock = parseInt('{{weapon_detail.tersedia}}');
+            var requestedQuantity = parseInt($("#jumlah").val());
+
+            $.ajax({
+                type: "PUT",
+                url: "/edit_item/" + weapon_id,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response["result"] === "success") {
+                        alert("Berhasil mengambil item");
+                        window.location.reload();
+                    } else {
+                        alert("Error: " + response["message"]);
+                    }
+                },
+            });
+        }
 
         function updateCurrentTime() {
             var options = {
