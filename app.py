@@ -433,7 +433,7 @@ def detail_pakai(weapon_id):
             {
                 '$set': {
                     "tersedia": db.weapon.find_one({'_id': ObjectId(weapon_id)})["tersedia"] - jumlah_receive,
-                    "terpakai": db.weapon.find_one({'_id': ObjectId(weapon_id)})["terpakai"] + jumlah_receive
+                    "dipakai": db.weapon.find_one({'_id': ObjectId(weapon_id)})["dipakai"] + jumlah_receive
                 }
             }
         )
@@ -532,14 +532,17 @@ def delete_item(item_id):
 def edit_item(weapon_id):
     token_receive = request.cookies.get("mytoken")
     try:
-        jumlah_receive = int(request.form["jumlah_give"]) 
+        tersedia_receive = int(request.form["tersedia_give"]) 
+        dipakai_receive = int(request.form["dipakai_give"]) 
+        rusak_receive = int(request.form["rusak_give"]) 
 
         db.weapon.update_one(
             {'_id': ObjectId(weapon_id)},
             {
                 '$set': {
-                    "tersedia": db.weapon.find_one({'_id': ObjectId(weapon_id)})["tersedia"] - jumlah_receive,
-                    "terpakai": db.weapon.find_one({'_id': ObjectId(weapon_id)})["terpakai"] + jumlah_receive
+                    "tersedia": tersedia_receive,
+                    "dipakai": dipakai_receive,
+                    "rusak": rusak_receive
                 }
             }
         )
