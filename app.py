@@ -315,6 +315,7 @@ def manage_armory():
             if user_info:
                 is_admin = user_info.get("role") == "admin"
                 logged_in = True
+                role = user_info.get("role")
             else:
                 is_admin = False
                 logged_in = False
@@ -322,6 +323,9 @@ def manage_armory():
             user_info = None
             is_admin = False
             logged_in = False
+
+        if role not in ["admin", "member"]:
+            return redirect(url_for("dashboard"))
 
         weapon_list = db.weapon.find()
         
@@ -346,6 +350,7 @@ def edit(weapon_id):
             if user_info:
                 is_admin = user_info.get("role") == "admin"
                 logged_in = True
+                role = user_info.get("role")
             else:
                 is_admin = False
                 logged_in = False
@@ -353,6 +358,9 @@ def edit(weapon_id):
             user_info = None
             is_admin = False
             logged_in = False
+
+        if role not in ["admin", "member"]:
+            return redirect(url_for("dashboard"))
 
         weapon_detail = db.weapon.find_one({'_id': ObjectId(weapon_id)})
         

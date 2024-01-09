@@ -79,6 +79,10 @@
         #current-time {
             margin-right: 20px;
         }
+
+        #kembalikan {
+            margin-top: 10px;
+        }
     </style>
 
     <script>
@@ -115,6 +119,60 @@
             } else {
                 alert("Item Tersedia Habis");
             }
+        }
+
+        function kembalikan(weapon_id) {
+            var formData = new FormData();
+            formData.append('jumlah_give', $("#jumlah").val());
+
+            console.log('Weapon ID:', weapon_id);
+            console.log('Jumlah Give:', $("#jumlah").val());
+
+            var availableStock = parseInt('{{weapon_detail.tersedia}}');
+            var requestedQuantity = parseInt($("#jumlah").val());
+
+            $.ajax({
+                type: "PUT",
+                url: "/detail_kembalikan/" + weapon_id,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response["result"] === "success") {
+                        alert("Berhasil mengembalikan item dengan kondisi normal");
+                        window.location.reload();
+                    } else {
+                        alert("Error: " + response["message"]);
+                    }
+                },
+            });
+        }
+
+        function kembalikan_rusak(weapon_id) {
+            var formData = new FormData();
+            formData.append('jumlah_give', $("#jumlah").val());
+
+            console.log('Weapon ID:', weapon_id);
+            console.log('Jumlah Give:', $("#jumlah").val());
+
+            var availableStock = parseInt('{{weapon_detail.tersedia}}');
+            var requestedQuantity = parseInt($("#jumlah").val());
+
+            $.ajax({
+                type: "PUT",
+                url: "/detail_kembalikan_rusak/" + weapon_id,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response["result"] === "success") {
+                        alert("Berhasil mengembalikan item dengan kondisi rusak");
+                        window.location.reload();
+                    } else {
+                        alert("Error: " + response["message"]);
+                    }
+                },
+            });
         }
 
 
@@ -279,8 +337,11 @@
                                 <div style="display: flex; justify-content: center;">
                                     <div class="d-grid gap-2 d-md-block">
                                         <button class="btn btn-primary" type="button" onclick="ambil('{{weapon_detail._id}}')">Ambil</button>
-                                        <button class="btn btn-danger" type="button">Rusak</button>
                                     </div>
+                                </div>
+                                <div style="display: flex; justify-content: center;"><div class="d-grid gap-2 d-md-block" id="kembalikan">
+                                    <button class="btn btn-success" type="button" onclick="kembalikan('{{weapon_detail._id}}')">Kembalikan</button>
+                                    <button class="btn btn-danger" type="button" onclick="kembalikan_rusak('{{weapon_detail._id}}')">Kembalikan (Rusak)</button>
                                 </div>
                             </div>
                         </div>
