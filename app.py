@@ -452,7 +452,87 @@ def detail_pakai(weapon_id):
 
         mytime = datetime.now().strftime("%H:%M:%S - %d %B %Y")
 
-        history_message = f"Stock {weapon_name} berkurang {jumlah_receive} untuk dipakai (Tersedia: {tersedia_receive} | Dipakai: {dipakai_receive} | Rusak: {rusak_receive})"
+        history_message = f"{jumlah_receive} {weapon_name} diambil untuk dipakai"
+        history_message2 = f"Admin | {mytime}"
+        today = datetime.now()
+
+        db.history.insert_one({
+            "weapon": weapon_name,
+            "message": history_message,
+            "by" : history_message2,
+            "timestamp": today
+        })
+
+        return jsonify({"result": "success"})
+    
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("index"))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("index"))
+    
+@app.route('/detail_kembalikan/<string:weapon_id>', methods = ['PUT'])
+def detail_kembalikan(weapon_id):
+    from datetime import datetime
+    token_receive = request.cookies.get("mytoken")
+    try:
+        jumlah_receive = int(request.form["jumlah_give"]) 
+
+        db.weapon.update_one(
+            {'_id': ObjectId(weapon_id)},
+            {
+                '$set': {
+                    "tersedia": db.weapon.find_one({'_id': ObjectId(weapon_id)})["tersedia"] + jumlah_receive,
+                    "dipakai": db.weapon.find_one({'_id': ObjectId(weapon_id)})["dipakai"] - jumlah_receive
+                }
+            }
+        )
+
+        weapon_data = db.weapon.find_one({'_id': ObjectId(weapon_id)})
+        weapon_name = weapon_data.get("name")
+
+        mytime = datetime.now().strftime("%H:%M:%S - %d %B %Y")
+
+        history_message = f"{jumlah_receive} {weapon_name} dikembalikan dengan kondisi normal"
+        history_message2 = f"Admin | {mytime}"
+        today = datetime.now()
+
+        db.history.insert_one({
+            "weapon": weapon_name,
+            "message": history_message,
+            "by" : history_message2,
+            "timestamp": today
+        })
+
+        return jsonify({"result": "success"})
+    
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("index"))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("index"))
+    
+@app.route('/detail_kembalikan_rusak/<string:weapon_id>', methods = ['PUT'])
+def detail_kembalikan_rusak(weapon_id):
+    from datetime import datetime
+    token_receive = request.cookies.get("mytoken")
+    try:
+        jumlah_receive = int(request.form["jumlah_give"]) 
+
+        db.weapon.update_one(
+            {'_id': ObjectId(weapon_id)},
+            {
+                '$set': {
+                    "rusak": db.weapon.find_one({'_id': ObjectId(weapon_id)})["rusak"] + jumlah_receive,
+                    "dipakai": db.weapon.find_one({'_id': ObjectId(weapon_id)})["dipakai"] - jumlah_receive
+                }
+            }
+        )
+
+        weapon_data = db.weapon.find_one({'_id': ObjectId(weapon_id)})
+        weapon_name = weapon_data.get("name")
+
+        mytime = datetime.now().strftime("%H:%M:%S - %d %B %Y")
+
+        history_message = f"{jumlah_receive} {weapon_name} dikembalikan dengan kondisi rusak"
         history_message2 = f"Admin | {mytime}"
         today = datetime.now()
 

@@ -128,24 +128,32 @@
             console.log('Weapon ID:', weapon_id);
             console.log('Jumlah Give:', $("#jumlah").val());
 
-            var availableStock = parseInt('{{weapon_detail.tersedia}}');
+            var availableStock = parseInt('{{weapon_detail.dipakai}}');
             var requestedQuantity = parseInt($("#jumlah").val());
 
-            $.ajax({
-                type: "PUT",
-                url: "/detail_kembalikan/" + weapon_id,
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    if (response["result"] === "success") {
-                        alert("Berhasil mengembalikan item dengan kondisi normal");
-                        window.location.reload();
-                    } else {
-                        alert("Error: " + response["message"]);
-                    }
-                },
-            });
+            if (availableStock >= 1) {
+                if (requestedQuantity <= availableStock) {
+                    $.ajax({
+                        type: "PUT",
+                        url: "/detail_kembalikan/" + weapon_id,
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            if (response["result"] === "success") {
+                                alert("Berhasil mengembalikan item dengan kondisi normal");
+                                window.location.reload();
+                            } else {
+                                alert("Error: " + response["message"]);
+                            }
+                        },
+                    });
+                } else {
+                    alert("Jumlah yang dikembalikan melebihi stok yang ada");
+                }
+            } else {
+                alert("Jumlah yang dikembalikan melebihi stok yang ada");
+            }
         }
 
         function kembalikan_rusak(weapon_id) {
@@ -155,24 +163,32 @@
             console.log('Weapon ID:', weapon_id);
             console.log('Jumlah Give:', $("#jumlah").val());
 
-            var availableStock = parseInt('{{weapon_detail.tersedia}}');
+            var availableStock = parseInt('{{weapon_detail.dipakai}}');
             var requestedQuantity = parseInt($("#jumlah").val());
 
-            $.ajax({
-                type: "PUT",
-                url: "/detail_kembalikan_rusak/" + weapon_id,
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    if (response["result"] === "success") {
-                        alert("Berhasil mengembalikan item dengan kondisi rusak");
-                        window.location.reload();
-                    } else {
-                        alert("Error: " + response["message"]);
-                    }
-                },
-            });
+            if (availableStock >= 1) {
+                if (requestedQuantity <= availableStock) {
+                    $.ajax({
+                        type: "PUT",
+                        url: "/detail_kembalikan_rusak/" + weapon_id,
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            if (response["result"] === "success") {
+                                alert("Berhasil mengembalikan item dengan kondisi rusak");
+                                window.location.reload();
+                            } else {
+                                alert("Error: " + response["message"]);
+                            }
+                        },
+                    });
+                } else {
+                    alert("Jumlah yang dikembalikan melebihi stok yang ada");
+                }
+            } else {
+                alert("Jumlah yang dikembalikan melebihi stok yang ada");
+            }
         }
 
 
