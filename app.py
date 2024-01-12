@@ -432,6 +432,7 @@ def api_login():
     
 @app.route('/detail_pakai/<string:weapon_id>', methods = ['PUT'])
 def detail_pakai(weapon_id):
+    from datetime import datetime
     token_receive = request.cookies.get("mytoken")
     try:
         jumlah_receive = int(request.form["jumlah_give"]) 
@@ -445,6 +446,22 @@ def detail_pakai(weapon_id):
                 }
             }
         )
+
+        weapon_data = db.weapon.find_one({'_id': ObjectId(weapon_id)})
+        weapon_name = weapon_data.get("name")
+
+        mytime = datetime.now().strftime("%H:%M:%S - %d %B %Y")
+
+        history_message = f"Stock {weapon_name} berkurang {jumlah_receive} untuk dipakai (Tersedia: {tersedia_receive} | Dipakai: {dipakai_receive} | Rusak: {rusak_receive})"
+        history_message2 = f"Admin | {mytime}"
+        today = datetime.now()
+
+        db.history.insert_one({
+            "weapon": weapon_name,
+            "message": history_message,
+            "by" : history_message2,
+            "timestamp": today
+        })
 
         return jsonify({"result": "success"})
     
