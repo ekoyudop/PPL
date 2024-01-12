@@ -30,6 +30,7 @@
             margin-right: 25px;
             margin-left: 25px;
             margin-bottom: 25px;
+            background-color: white;
         }
 
         #navbar h2 {
@@ -42,6 +43,14 @@
         
         #current-time {
             margin-right: 20px ;
+        }
+
+        body {
+            background-image: url('/static/background.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            height: 100vh; 
         }
     </style>
     <script>
@@ -70,7 +79,7 @@
 </head>
 
 <body>
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 bg-body-tertiary" id="navbar">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 bg-white" id="navbar" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
         <a href="/dashboard"
             class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             <h2>ALUTSISTA</h2>
@@ -96,7 +105,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 280px;">
+            <div class="d-flex flex-column flex-shrink-0 p-3 bg-white" style="width: 280px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); ">
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
                         <a href="/dashboard" class="nav-link active" aria-current="page">
