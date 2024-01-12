@@ -506,6 +506,7 @@ def detail_pakai(weapon_id):
     token_receive = request.cookies.get("mytoken")
     try:
         jumlah_receive = int(request.form["jumlah_give"]) 
+        username_receive = request.form["username_give"]
 
         db.weapon.update_one(
             {'_id': ObjectId(weapon_id)},
@@ -523,7 +524,7 @@ def detail_pakai(weapon_id):
         mytime = datetime.now().strftime("%H:%M:%S - %d %B %Y")
 
         history_message = f"{jumlah_receive} unit {weapon_name} diambil untuk dipakai"
-        history_message2 = f"Admin | {mytime}"
+        history_message2 = f"{username_receive} | {mytime}"
         today = datetime.now()
 
         db.history.insert_one({
@@ -546,6 +547,7 @@ def detail_kembalikan(weapon_id):
     token_receive = request.cookies.get("mytoken")
     try:
         jumlah_receive = int(request.form["jumlah_give"]) 
+        username_receive = request.form["username_give"]
 
         db.weapon.update_one(
             {'_id': ObjectId(weapon_id)},
@@ -563,7 +565,7 @@ def detail_kembalikan(weapon_id):
         mytime = datetime.now().strftime("%H:%M:%S - %d %B %Y")
 
         history_message = f"{jumlah_receive} unit {weapon_name} dikembalikan dengan kondisi normal"
-        history_message2 = f"Admin | {mytime}"
+        history_message2 = f"{username_receive} | {mytime}"
         today = datetime.now()
 
         db.history.insert_one({
@@ -585,7 +587,8 @@ def detail_kembalikan_rusak(weapon_id):
     from datetime import datetime
     token_receive = request.cookies.get("mytoken")
     try:
-        jumlah_receive = int(request.form["jumlah_give"]) 
+        jumlah_receive = int(request.form["jumlah_give"])
+        username_receive = request.form["username_give"]
 
         db.weapon.update_one(
             {'_id': ObjectId(weapon_id)},
@@ -596,14 +599,14 @@ def detail_kembalikan_rusak(weapon_id):
                 }
             }
         )
-
+        
         weapon_data = db.weapon.find_one({'_id': ObjectId(weapon_id)})
         weapon_name = weapon_data.get("name")
 
         mytime = datetime.now().strftime("%H:%M:%S - %d %B %Y")
 
         history_message = f"{jumlah_receive} unit {weapon_name} dikembalikan dengan kondisi rusak"
-        history_message2 = f"Admin | {mytime}"
+        history_message2 = f"{username_receive} | {mytime}"
         today = datetime.now()
 
         db.history.insert_one({

@@ -89,6 +89,8 @@
         function ambil(weapon_id) {
             var formData = new FormData();
             formData.append('jumlah_give', $("#jumlah").val());
+            formData.append('username_give', '{{user_info.username}}');
+
 
             console.log('Weapon ID:', weapon_id);
             console.log('Jumlah Give:', $("#jumlah").val());
@@ -124,6 +126,7 @@
         function kembalikan(weapon_id) {
             var formData = new FormData();
             formData.append('jumlah_give', $("#jumlah").val());
+            formData.append('username_give', '{{user_info.username}}');
 
             console.log('Weapon ID:', weapon_id);
             console.log('Jumlah Give:', $("#jumlah").val());
@@ -159,6 +162,7 @@
         function kembalikan_rusak(weapon_id) {
             var formData = new FormData();
             formData.append('jumlah_give', $("#jumlah").val());
+            formData.append('username_give', '{{user_info.username}}');
 
             console.log('Weapon ID:', weapon_id);
             console.log('Jumlah Give:', $("#jumlah").val());
