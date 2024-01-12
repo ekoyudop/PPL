@@ -538,6 +538,7 @@ def delete_item(item_id):
 
 @app.route('/edit_item/<string:weapon_id>', methods = ['PUT'])
 def edit_item(weapon_id):
+    from datetime import datetime
     token_receive = request.cookies.get("mytoken")
     try:
         tersedia_receive = int(request.form["tersedia_give"]) 
@@ -554,6 +555,22 @@ def edit_item(weapon_id):
                 }
             }
         )
+
+        weapon_data = db.weapon.find_one({'_id': ObjectId(weapon_id)})
+        weapon_name = weapon_data.get("name")
+
+        mytime = datetime.now().strftime("%H:%M:%S - %d %B %Y")
+
+        history_message = f"Stock {weapon_name} telah berhasil diubah (Tersedia: {tersedia_receive} | Dipakai: {dipakai_receive} | Rusak: {rusak_receive})"
+        history_message2 = f"Admin | {mytime}"
+        today = datetime.now()
+
+        db.history.insert_one({
+            "weapon": weapon_name,
+            "message": history_message,
+            "by" : history_message2,
+            "timestamp": today
+        })
 
         return jsonify({"result": "success"})
     
