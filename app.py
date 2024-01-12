@@ -38,21 +38,21 @@ def index():
     except jwt.exceptions.DecodeError:
         return render_template("welcome.html", msg="There was problem logging you in")
     
-@app.route('/register')
-def register():
-    token_receive = request.cookies.get("mytoken")
-    try:
-        payload = jwt.decode(
-            token_receive, 
-            SECRET_KEY, 
-            algorithms=["HS256"])
+# @app.route('/register')
+# def register():
+#     token_receive = request.cookies.get("mytoken")
+#     try:
+#         payload = jwt.decode(
+#             token_receive, 
+#             SECRET_KEY, 
+#             algorithms=["HS256"])
         
-        return redirect(url_for("dashboard"))
+#         return redirect(url_for("dashboard"))
     
-    except jwt.ExpiredSignatureError:
-        return render_template("register.html")
-    except jwt.exceptions.DecodeError:
-        return render_template("register.html")
+#     except jwt.ExpiredSignatureError:
+#         return render_template("register.html")
+#     except jwt.exceptions.DecodeError:
+#         return render_template("register.html")
     
 @app.route('/login')
 def login():
@@ -445,27 +445,27 @@ def edit2(user_id):
     except jwt.exceptions.DecodeError:
         return redirect(url_for("index"))
 
-@app.route("/api/register", methods=["POST"])
-def api_register():
-    username_receive = request.form["username_give"]
+# @app.route("/api/register", methods=["POST"])
+# def api_register():
+#     username_receive = request.form["username_give"]
 
-    existing_user = db.user.find_one({"username": username_receive})
-    if existing_user:
-        msg = f"An account with id {username_receive} already exists!"
-        return jsonify({"result": "failure", "msg": msg})
+#     existing_user = db.user.find_one({"username": username_receive})
+#     if existing_user:
+#         msg = f"An account with id {username_receive} already exists!"
+#         return jsonify({"result": "failure", "msg": msg})
 
-    password_receive = request.form["password_give"]
-    role_receive = request.form.get("role_give")
+#     password_receive = request.form["password_give"]
+#     role_receive = request.form.get("role_give")
 
-    password_hash = hashlib.sha256(password_receive.encode("utf-8")).hexdigest()
+#     password_hash = hashlib.sha256(password_receive.encode("utf-8")).hexdigest()
 
-    db.user.insert_one({
-        "username": username_receive, 
-        "password": password_hash, 
-        "role": role_receive
-    })
+#     db.user.insert_one({
+#         "username": username_receive, 
+#         "password": password_hash, 
+#         "role": role_receive
+#     })
 
-    return jsonify({"result": "success"})
+#     return jsonify({"result": "success"})
 
 @app.route("/api/login", methods=["POST"])
 def api_login():
