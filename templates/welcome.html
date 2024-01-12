@@ -42,16 +42,22 @@
         }
 
         body {
-            background-color: #eff8ff;
+            background-image: url('/static/Background2.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+        }
+
+        #header {
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-            <h1>ALUTSISTA</h1>
-        </header>
+    <div class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom bg-white" id="header">
+        <h1>ALUTSISTA</h1>
     </div>
     <div class="welcome">
         <div class="mx-auto p-2" id="image" style="width: 300px;">
