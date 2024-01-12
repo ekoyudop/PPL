@@ -324,7 +324,7 @@ def manage_armory():
             is_admin = False
             logged_in = False
 
-        if role not in ["admin", "member"]:
+        if role not in ["admin"]:
             return redirect(url_for("dashboard"))
 
         weapon_list = db.weapon.find()
@@ -359,16 +359,86 @@ def edit(weapon_id):
             is_admin = False
             logged_in = False
 
-        if role not in ["admin", "member"]:
+        if role not in ["admin"]:
             return redirect(url_for("dashboard"))
 
         weapon_detail = db.weapon.find_one({'_id': ObjectId(weapon_id)})
         
-        return render_template("edit.html", 
+        return render_template("edit_item.html", 
                                user_info = user_info,
                                is_admin = is_admin,
                                logged_in = logged_in,
                                weapon_detail = weapon_detail)
+    
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("index"))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("index"))
+    
+@app.route('/manage_user', methods = ['GET'])
+def manage_user():
+    token_receive = request.cookies.get("mytoken")
+    try:
+        if token_receive:
+            payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+            user_info = db.user.find_one({"username": payload["id"]})
+            if user_info:
+                is_admin = user_info.get("role") == "admin"
+                logged_in = True
+                role = user_info.get("role")
+            else:
+                is_admin = False
+                logged_in = False
+        else:
+            user_info = None
+            is_admin = False
+            logged_in = False
+
+        if role not in ["admin"]:
+            return redirect(url_for("dashboard"))
+
+        user_list = db.user.find()
+        
+        return render_template("manage_user.html", 
+                               user_info = user_info,
+                               is_admin = is_admin,
+                               logged_in = logged_in,
+                               user_list = user_list)
+    
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("index"))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("index"))
+    
+@app.route('/edit2/<string:user_id>', methods = ['GET'])
+def edit2(user_id):
+    token_receive = request.cookies.get("mytoken")
+    try:
+        if token_receive:
+            payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+            user_info = db.user.find_one({"username": payload["id"]})
+            if user_info:
+                is_admin = user_info.get("role") == "admin"
+                logged_in = True
+                role = user_info.get("role")
+            else:
+                is_admin = False
+                logged_in = False
+        else:
+            user_info = None
+            is_admin = False
+            logged_in = False
+
+        if role not in ["admin"]:
+            return redirect(url_for("dashboard"))
+
+        user_detail = db.user.find_one({'_id': ObjectId(user_id)})
+        
+        return render_template("edit_user.html", 
+                               user_info = user_info,
+                               is_admin = is_admin,
+                               logged_in = logged_in,
+                               user_detail = user_detail)
     
     except jwt.ExpiredSignatureError:
         return redirect(url_for("index"))
@@ -379,7 +449,7 @@ def edit(weapon_id):
 def api_register():
     username_receive = request.form["username_give"]
 
-    existing_user = db.user.find_one({"id": username_receive})
+    existing_user = db.user.find_one({"username": username_receive})
     if existing_user:
         msg = f"An account with id {username_receive} already exists!"
         return jsonify({"result": "failure", "msg": msg})
@@ -669,6 +739,94 @@ def edit_item(weapon_id):
             "timestamp": today
         })
 
+        return jsonify({"result": "success"})
+    
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("index"))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("index"))
+    
+@app.route("/add_user", methods=["POST"])
+def add_user():
+    from datetime import datetime
+    token_receive = request.cookies.get("mytoken")
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+
+        username_receive = request.form["username_give"]
+        password_receive = request.form["password_give"]
+        nama_receive = request.form["nama_give"]
+        email_receive = request.form["email_give"]
+        nrp_receive = request.form["nrp_give"]
+        kesatuan_receive = request.form["kesatuan_give"]
+        notelepon_receive = request.form["notelepon_give"]
+
+        password_hash = hashlib.sha256(password_receive.encode("utf-8")).hexdigest()
+
+        existing_user = db.user.find_one({"username": username_receive})
+        if existing_user:
+            return jsonify({"result": "error", "message": "User sudah ada."})
+
+        db.user.insert_one({
+            "username": username_receive,
+            "password": password_hash,
+            "password2": password_receive,
+            "nama": nama_receive,
+            "email": email_receive,
+            "nrp": nrp_receive,
+            "kesatuan": kesatuan_receive,
+            "notelepon": notelepon_receive
+        })
+
+        return jsonify({"result": "success"})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("discover"))
+    
+@app.route('/delete_user/<string:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    from datetime import datetime
+    try:
+        result = db.user.delete_one({'_id': ObjectId(user_id)})
+
+        if result.deleted_count > 0:
+            response = {'result': 'success', 'message': 'Item deleted successfully.'}
+        else:
+            response = {'result': 'error', 'message': 'Course not found.'}
+    except Exception as e:
+        response = {'result': 'error', 'message': str(e)}
+
+    return jsonify(response)
+
+@app.route('/edit_user/<string:user_id>', methods = ['PUT'])
+def edit_user(user_id):
+    from datetime import datetime
+    token_receive = request.cookies.get("mytoken")
+    try:
+        username_receive = request.form["username_give"]
+        password_receive = request.form["password_give"]
+        nama_receive = request.form["nama_give"]
+        email_receive = request.form["email_give"]
+        nrp_receive = request.form["nrp_give"]
+        kesatuan_receive = request.form["kesatuan_give"]
+        notelepon_receive = request.form["notelepon_give"]
+
+        password_hash = hashlib.sha256(password_receive.encode("utf-8")).hexdigest()
+
+        db.user.update_one(
+            {'_id': ObjectId(user_id)},
+            {
+                '$set': {
+                    "username": username_receive,
+                    "password": password_hash,
+                    "password2": password_receive,
+                    "nama": nama_receive,
+                    "email": email_receive,
+                    "nrp": nrp_receive,
+                    "kesatuan": kesatuan_receive,
+                    "notelepon": notelepon_receive
+                }
+            }
+        )
         return jsonify({"result": "success"})
     
     except jwt.ExpiredSignatureError:
