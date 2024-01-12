@@ -452,7 +452,7 @@ def detail_pakai(weapon_id):
 
         mytime = datetime.now().strftime("%H:%M:%S - %d %B %Y")
 
-        history_message = f"{jumlah_receive} {weapon_name} diambil untuk dipakai"
+        history_message = f"{jumlah_receive} unit {weapon_name} diambil untuk dipakai"
         history_message2 = f"Admin | {mytime}"
         today = datetime.now()
 
@@ -492,7 +492,7 @@ def detail_kembalikan(weapon_id):
 
         mytime = datetime.now().strftime("%H:%M:%S - %d %B %Y")
 
-        history_message = f"{jumlah_receive} {weapon_name} dikembalikan dengan kondisi normal"
+        history_message = f"{jumlah_receive} unit {weapon_name} dikembalikan dengan kondisi normal"
         history_message2 = f"Admin | {mytime}"
         today = datetime.now()
 
@@ -532,7 +532,7 @@ def detail_kembalikan_rusak(weapon_id):
 
         mytime = datetime.now().strftime("%H:%M:%S - %d %B %Y")
 
-        history_message = f"{jumlah_receive} {weapon_name} dikembalikan dengan kondisi rusak"
+        history_message = f"{jumlah_receive} unit {weapon_name} dikembalikan dengan kondisi rusak"
         history_message2 = f"Admin | {mytime}"
         today = datetime.now()
 
