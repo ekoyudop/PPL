@@ -391,7 +391,7 @@
                 <div class="row">
                     {% for history in history|reverse %}
                     <div class="row col-md-9" id="history">
-                        <div class="col">{{history.message}}</div>
+                        <div class="col-md-auto">{{history.message}}</div>
                         <div class="col text-end">{{history.by}}</div>
                     </div>
                     {% endfor %}
